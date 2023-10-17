@@ -13,7 +13,6 @@ public class MemberApplication {
         SpringApplication app = new SpringApplication(MemberApplication.class);
         ConfigurableEnvironment env = app.run(args).getEnvironment();
         log.info("启动成功");
-        log.info("host: \t http://127.0.0.1:{}",env.getProperty("server.port"));
-
+        log.info("test host: \t http://127.0.0.1:{}{}/test/hello",env.getProperty("server.port"),env.getProperty("server.servlet.context-path"));
     }
 }
