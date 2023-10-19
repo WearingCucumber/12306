@@ -9,13 +9,11 @@ import com.study.train.member.service.MemberService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/member")
+
 public class MemberController {
     @Autowired
     private MemberService memberService;
@@ -34,13 +32,13 @@ public class MemberController {
 //        return com ;
         return new CommonResp<>(memberService.register(req));
     }
-    @PostMapping("/sendcode")
-    public CommonResp<Long> sendCode(@Valid MemberSendCodeReq req){
+    @PostMapping("/send-code")
+    public CommonResp<Long> sendCode(@RequestBody @Valid MemberSendCodeReq req){
         memberService.sendCode(req);
         return  new CommonResp<>();
     }
     @PostMapping("/login")
-    public CommonResp<MemberLoginResp> login(@Valid MemberLoginReq req){
+    public CommonResp<MemberLoginResp> login(@RequestBody @Valid MemberLoginReq req){
         MemberLoginResp resp = memberService.Login(req);
         return  new CommonResp<>(resp);
     }
