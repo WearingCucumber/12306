@@ -48,15 +48,13 @@ export default defineComponent({
   name: "login-view",
   setup() {
     const router = useRouter();
-    const api = "http://localhost:8000"
-
     const loginForm = reactive({
       mobile: '13000000000',
       code: '',
     });
 
     const sendCode = () => {
-      axios.post(api+"/member/member/send-code", {
+      axios.post("/member/member/send-code", {
         mobile: loginForm.mobile
       }).then(response => {
         let data = response.data;
@@ -70,7 +68,7 @@ export default defineComponent({
     };
 
     const login = () => {
-      axios.post(api+"/member/member/login", loginForm).then((response) => {
+      axios.post("/member/member/login", loginForm).then((response) => {
         let data = response.data;
         if (data.success) {
           notification.success({ description: '登录成功！' });
