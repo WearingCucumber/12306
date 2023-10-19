@@ -18,6 +18,7 @@
         <module>member</module>
         <module>common</module>
         <module>gateway</module>
+        <module>generator</module>
     </modules>
     <properties>
         <java.version>17</java.version>
@@ -28,6 +29,7 @@
         <common.version>0.0.1-SNAPSHOT</common.version>
         <mysql-connector-j.version>8.0.33</mysql-connector-j.version>
         <mybatis-spring-boot-starter.version>3.0.0</mybatis-spring-boot-starter.version>
+        <member.version>0.0.1-SNAPSHOT</member.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -70,6 +72,11 @@
                 <groupId>com.mysql</groupId>
                 <artifactId>mysql-connector-j</artifactId>
                 <version>${mysql-connector-j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.study</groupId>
+                <artifactId>member</artifactId>
+                <version>${member.version}</version>
             </dependency>
 
         </dependencies>
