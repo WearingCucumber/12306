@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.study.train.member.domain.Member;
 import com.study.train.member.domain.MemberExample;
 import com.study.train.member.mapper.MemberMapper;
+import com.study.train.member.req.MemberRegisterReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,8 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public long register(String mobile) {
+    public long register(MemberRegisterReq req) {
+        String mobile = req.getMobile();
         MemberExample memberExample = new MemberExample();
         memberExample.createCriteria().andMobileEqualTo(mobile);
         List<Member> list = memberMapper.selectByExample(memberExample);
