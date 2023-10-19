@@ -4,6 +4,7 @@ import com.study.train.common.resp.CommonResp;
 import com.study.train.member.req.MemberRegisterReq;
 import com.study.train.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ public class MemberController {
         return com;
     }
     @PostMapping("/register")
-    public CommonResp<Long> register(MemberRegisterReq req){
+    public CommonResp<Long> register(@Validated MemberRegisterReq req){
 //        CommonResp<Long> com = new CommonResp<>();
 //        long register = memberService.register(req);
 //        com.setContent(register);
