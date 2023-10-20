@@ -12,7 +12,7 @@
         <a-layout-content
             :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
         >
-          Content
+          {{count}}
         </a-layout-content>
       </a-layout>
     </a-layout>
@@ -23,16 +23,30 @@
 import { defineComponent, ref } from 'vue';
 import HeaderView from "@/components/headerComponent.vue";
 import SiderComponent from "@/components/siderComponent.vue";
+import axios from "axios";
+import {notification} from "ant-design-vue";
 export default defineComponent({
   components: {
     SiderComponent,
     HeaderView
   },
   setup() {
+    const count = ref(0);
+    axios.get("/member/member/count", {
+    }).then(response => {
+      let data = response.data;
+      if (data.success) {
+        count.value = data.content;
+        notification.success({description:data.content})
+      } else {
+        notification.error({ description: data.message });
+      }
+    });
     return {
       selectedKeys2: ref(['1']),
       collapsed: ref(false),
       openKeys: ref(['sub1']),
+      count
     };
   },
 });
