@@ -8,6 +8,7 @@ public class Member {
 
     private String mobile;
 
+
 //    public Long getId() {
 //        return id;
 //    }

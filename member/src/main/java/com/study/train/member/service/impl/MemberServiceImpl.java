@@ -6,6 +6,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.study.train.common.exception.BusinessException;
 import com.study.train.common.exception.BusinessExceptionEnum;
+import com.study.train.common.util.JwtUtil;
 import com.study.train.common.util.SnowUtil;
 import com.study.train.member.domain.Member;
 import com.study.train.member.domain.MemberExample;
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Slf4j
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -79,6 +81,8 @@ public class MemberServiceImpl implements MemberService {
             throw new BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_CODE_ERROR);
         }else {
             MemberLoginResp resp = BeanUtil.copyProperties(member, MemberLoginResp.class);
+            String token = JwtUtil.createToken(resp.getId(), resp.getMobile());
+            resp.setToken(token);
             return resp;
 
         }
