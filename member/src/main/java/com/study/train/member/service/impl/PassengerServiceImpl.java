@@ -6,11 +6,16 @@ import com.study.train.common.context.LoginMemberContext;
 import com.study.train.common.util.SnowUtil;
 import com.study.train.member.domain.Passenger;
 import com.study.train.member.mapper.PassengerMapper;
+import com.study.train.member.req.PassengerQueryReq;
 import com.study.train.member.req.PassengerSaveReq;
+import com.study.train.member.resp.PassengerQueryResp;
 import com.study.train.member.service.PassengerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 @Slf4j
 @Service
 public class PassengerServiceImpl implements PassengerService {
@@ -26,5 +31,11 @@ public class PassengerServiceImpl implements PassengerService {
         passenger.setCreateTime(now);
         passenger.setUpdateTime(now);
         passengerMapper.insert(passenger);
+    }
+
+    @Override
+    public List<Passenger> queryList(PassengerQueryReq req) {
+        List<Passenger> passengers = passengerMapper.queryList(req);
+        return passengers;
     }
 }
