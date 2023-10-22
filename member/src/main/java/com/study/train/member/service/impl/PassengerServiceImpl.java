@@ -56,4 +56,9 @@ public class PassengerServiceImpl implements PassengerService {
         passengerPageResp.setList(passengerQueryResps);
         return passengerPageResp;
     }
+
+    @Override
+    public void delete(Long id) {
+        passengerMapper.deleteById(id);
+    }
 }

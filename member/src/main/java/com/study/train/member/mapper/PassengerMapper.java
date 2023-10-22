@@ -12,4 +12,6 @@ public interface PassengerMapper {
 
     List<Passenger> queryList(PassengerQueryReq passengerQueryReq);
     void updateById(Passenger passenger);
+
+    void deleteById(Long id);
 }

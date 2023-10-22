@@ -21,5 +21,8 @@
   <update id="updateById" parameterType="com.study.train.member.domain.Passenger" flushCache="true">
     update passenger set name = #{name} , id_card = #{idCard} , type = #{type} ,update_time = #{updateTime} where id = #{id}
   </update>
+  <delete id="deleteById" parameterType="java.lang.Long">
+    delete from passenger where id = #{id}
+  </delete>
 
 </mapper>

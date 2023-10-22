@@ -8,4 +8,6 @@ import com.study.train.member.resp.PassengerQueryResp;
 public interface PassengerService {
     void save(PassengerSaveReq passengerSaveReq);
     PageResp<PassengerQueryResp> queryList(PassengerQueryReq req);
+
+    void delete(Long id);
 }

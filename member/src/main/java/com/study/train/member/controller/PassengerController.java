@@ -8,6 +8,7 @@ import com.study.train.member.req.PassengerSaveReq;
 import com.study.train.member.resp.PassengerQueryResp;
 import com.study.train.member.service.PassengerService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -30,4 +31,10 @@ public class PassengerController {
         PageResp<PassengerQueryResp> list = passengerService.queryList(passengerQueryReq);
         return new CommonResp<>(list);
     }
+    @DeleteMapping("/delete/{id}")
+    public CommonResp<Object> delete(@NotNull(message = "id不能为空") @PathVariable Long id){
+        passengerService.delete(id);
+        return new CommonResp("删除成功");
+    }
+
 }
