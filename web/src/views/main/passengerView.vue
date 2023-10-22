@@ -6,6 +6,7 @@
         <template v-if="column.dataIndex=== 'operation'">
           <a-space>
             <a @click = "onEdit(record)">编辑</a>
+            <a @click = "onDelete(record.id)">删除</a>
           </a-space>
         </template>
       </template>
@@ -55,6 +56,20 @@ export default defineComponent({
     const onEdit = (record)=>{
       passenger.value=window.Tool.copy(record);
       open.value=true;
+    }
+    const  onDelete=(id)=>{
+      axios.delete("/member/passenger/delete/"+id).then(response=>{
+        handleQuery({
+          page:1,
+          pageSize: 2
+        })
+        let data = response.data;
+        if (data.success){
+          notification.success({description:data.content})
+        }else {
+          notification.error({description:data.message})
+        }
+      })
     }
     const handleOk = (e) =>{
       axios.post("/member/passenger/save",passenger.value).then(response=>{
@@ -148,7 +163,8 @@ export default defineComponent({
       open,
       onAdd,
       handleOk,
-      onEdit
+      onEdit,
+      onDelete
     }
   }
 })
