@@ -9,10 +9,11 @@ import com.study.train.member.resp.PassengerQueryResp;
 import com.study.train.member.service.PassengerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Validated
 @RestController
 @RequestMapping("/passenger")
 public class PassengerController {
@@ -24,9 +25,7 @@ public class PassengerController {
         return new CommonResp("添加成功");
     }
     @GetMapping("/query-list")
-    public CommonResp<List<PassengerQueryResp>> queryList(PassengerQueryReq passengerQueryReq){
-//        PassengerQueryReq passengerQueryReq = new PassengerQueryReq();
-//        passengerQueryReq.setMemberId(LoginMemberContext.getId());
+    public CommonResp<List<PassengerQueryResp>> queryList(@Validated PassengerQueryReq passengerQueryReq){
         List<Passenger> passengers = passengerService.queryList(passengerQueryReq);
         List<PassengerQueryResp> resps = BeanUtil.copyToList(passengers, PassengerQueryResp.class);
         return new CommonResp<>(resps);

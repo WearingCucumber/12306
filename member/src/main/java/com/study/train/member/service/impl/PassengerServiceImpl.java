@@ -35,7 +35,7 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Override
     public List<Passenger> queryList(PassengerQueryReq req) {
-        PageHelper.startPage(1,2);
+        PageHelper.startPage(req.getPage(),req.getPageSize());
         List<Passenger> passengers = passengerMapper.queryList(req);
         return passengers;
     }

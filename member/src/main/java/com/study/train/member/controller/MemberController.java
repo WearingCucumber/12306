@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/member")
-
+@Validated
 public class MemberController {
     @Autowired
     private MemberService memberService;
@@ -25,7 +25,7 @@ public class MemberController {
         return com;
     }
     @PostMapping("/register")
-    public CommonResp<Long> register(@Validated MemberRegisterReq req){
+    public CommonResp<Long> register(@Valid MemberRegisterReq req){
 //        CommonResp<Long> com = new CommonResp<>();
 //        long register = memberService.register(req);
 //        com.setContent(register);
