@@ -1,6 +1,7 @@
 <template>
   <div>
-    <a-button type="primary" @click = "showModal">新增</a-button>
+    <p><a-button type="primary" @click = "showModal">新增</a-button></p>
+    <a-table :data-source="passengers" :columns="columns" :pagination="pagination" @change="handleTableChange" :loading="loading"/>
     <a-modal v-model:open="open" title = "新增乘车人" @ok="handleOk" ok-text="添加" cancel-text="取消">
       <a-form :model="passenger" :label-col="{span: 4}" >
         <a-form-item label ="姓名:">
@@ -21,7 +22,7 @@
   </div>
 </template>
 <script>
-import {defineComponent, reactive, ref} from "vue";
+import {defineComponent, onMounted, reactive, ref} from "vue";
 import axios from "axios";
 import {notification} from "ant-design-vue";
 
@@ -48,6 +49,10 @@ export default defineComponent({
         if (data.success){
           notification.success({description:data.content})
           open.value=false;
+          handleQuery({
+            page:1,
+            pageSize:2
+          })
         }else {
           notification.error({description:data.message})
         }
@@ -55,12 +60,74 @@ export default defineComponent({
       console.log(e)
       open.value = false;
     };
+    const passengers = ref([]);
+    const columns = [{
+      title: '姓名',
+      dataIndex:'name',
+      key:'name'
+    },{
+      title: '身份证',
+      dataIndex:'idCard',
+      key:'idCard'
+    },{
+      title: '类型',
+      dataIndex:'type',
+      key:'type'
+    },{
+      title:"创建时间",
+      dataIndex:'createTime',
+      key:'createTime'
+    }];
+    const  handleQuery = (param)=>{
+      loading.value=true;
+      axios.get("/member/passenger/query-list",{
+        params:{
+          page:param.page,
+          pageSize:param.pageSize
+        }
+      }).then((response)=>{
+        loading.value=false;
+        let data = response.data;
+        if (data.success){
+          passengers.value = data.content.list;
+          //设置分页控件的值
+          pagination.current = param.page;
+          pagination.total = data.content.total;
+        }else {
+          notification.error({description:data.message})
+        }
+      })
+    };
+    const pagination = reactive({
+      total:0,
+      current:1,
+      pageSize:2
+    });
+    const handleTableChange =(pagination)=>{
+      handleQuery({
+        page:pagination.current,
+        pageSize:pagination.pageSize
+      })
+    };
+    const loading = ref(false)
+    onMounted(()=>{
+      handleQuery({
+        page:1,
+        pageSize:pagination.pageSize
+      })
+    });
+
     return{
+      loading,
+      handleTableChange,
+      pagination,
+      passengers,
+      handleQuery,
+      columns,
       passenger,
       open,
       showModal,
       handleOk
-
     }
   }
 })
