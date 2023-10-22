@@ -6,8 +6,21 @@
         <template v-if="column.dataIndex=== 'operation'">
           <a-space>
             <a @click = "onEdit(record)">编辑</a>
-            <a @click = "onDelete(record.id)">删除</a>
+            <a-popconfirm
+             title="确认删除?"
+             @confirm="onDelete(record.id)"
+             ok-text="确认" cancel-text="取消"
+            >
+              <a >删除</a>
+            </a-popconfirm>
           </a-space>
+        </template>
+        <template v-if="column.dataIndex === 'type'">
+          <span v-for="item in PASSENGER_TYPE_LIST" :key="item.key">
+            <span v-if="item.key===record.type">
+              {{item.value}}
+            </span>
+          </span>
         </template>
       </template>
     </a-table>
@@ -21,9 +34,7 @@
         </a-form-item>
         <a-form-item label="乘客类型:">
           <a-select v-model:value="passenger.type">
-            <a-select-option value="1">成人</a-select-option>
-            <a-select-option value="2">儿童</a-select-option>
-            <a-select-option value="3">学生</a-select-option>
+            <a-select-option v-for="item in PASSENGER_TYPE_LIST" :key="item.key" :value="item.key" >{{item.value}}</a-select-option>
           </a-select>
         </a-form-item>
       </a-form>
@@ -39,6 +50,7 @@ export default defineComponent({
 
 
   setup(){
+    const PASSENGER_TYPE_LIST= window.PASSENGER_TYPE_LIST;//[{key:"1",value:"成人"},{key:"2",value:"儿童"},{key:"3",value:"学生"}]
     const passenger=ref({
       id:"",
       memberId:"",
@@ -78,8 +90,8 @@ export default defineComponent({
           notification.success({description:data.content})
           open.value=false;
           handleQuery({
-            page:1,
-            pageSize:2
+            page:pagination.value.current,
+            pageSize:pagination.value.pageSize
           })
         }else {
           notification.error({description:data.message})
@@ -153,6 +165,7 @@ export default defineComponent({
     });
 
     return{
+      PASSENGER_TYPE_LIST,
       loading,
       handleTableChange,
       pagination,
