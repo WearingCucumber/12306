@@ -16,7 +16,20 @@ const routes = [
     component: ()=>import('../views/MainView.vue'),
     meta:{
       loginRequire:true
-    }
+    },
+    children:[{
+      path: 'welcome',
+      component:()=> import('../views/main/welcomeView.vue')
+    },
+      {
+        path: "passenger",
+        component:()=>import("../views/main/passengerView.vue")
+
+      }]
+  },
+  {
+    path: "",
+    redirect:'/welcome'
   }
 ]
 
