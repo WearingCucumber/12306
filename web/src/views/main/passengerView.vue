@@ -1,7 +1,15 @@
 <template>
   <div>
-    <p><a-button type="primary" @click = "showModal">新增</a-button></p>
-    <a-table :data-source="passengers" :columns="columns" :pagination="pagination" @change="handleTableChange" :loading="loading"/>
+    <p><a-button type="primary" @click = "onAdd">新增</a-button></p>
+    <a-table :data-source="passengers" :columns="columns" :pagination="pagination" @change="handleTableChange" :loading="loading">
+      <template #bodyCell="{column,record}">
+        <template v-if="column.dataIndex=== 'operation'">
+          <a-space>
+            <a @click = "onEdit(record)">编辑</a>
+          </a-space>
+        </template>
+      </template>
+    </a-table>
     <a-modal v-model:open="open" title = "新增乘车人" @ok="handleOk" ok-text="添加" cancel-text="取消">
       <a-form :model="passenger" :label-col="{span: 4}" >
         <a-form-item label ="姓名:">
@@ -22,7 +30,7 @@
   </div>
 </template>
 <script>
-import {defineComponent, onMounted, reactive, ref} from "vue";
+import {defineComponent, onMounted, ref} from "vue";
 import axios from "axios";
 import {notification} from "ant-design-vue";
 
@@ -30,7 +38,7 @@ export default defineComponent({
 
 
   setup(){
-    const passenger=reactive({
+    const passenger=ref({
       id:"",
       memberId:"",
       name:"",
@@ -40,11 +48,16 @@ export default defineComponent({
       updateTime:""
     });
     const  open = ref(false);
-    const showModal=()=>{
+    const onAdd=()=>{
+      passenger.value={};
       open.value = true;
     };
+    const onEdit = (record)=>{
+      passenger.value=window.Tool.copy(record);
+      open.value=true;
+    }
     const handleOk = (e) =>{
-      axios.post("/member/passenger/save",passenger).then(response=>{
+      axios.post("/member/passenger/save",passenger.value).then(response=>{
         let data = response.data;
         if (data.success){
           notification.success({description:data.content})
@@ -81,7 +94,10 @@ export default defineComponent({
       title:"更新时间",
       dataIndex: 'updateTime',
       key: 'updateTime'
-      }];
+      },{
+      title:"操作",
+      dataIndex: "operation"
+    }];
     const  handleQuery = (param)=>{
       loading.value=true;
       axios.get("/member/passenger/query-list",{
@@ -95,14 +111,14 @@ export default defineComponent({
         if (data.success){
           passengers.value = data.content.list;
           //设置分页控件的值
-          pagination.current = param.page;
-          pagination.total = data.content.total;
+          pagination.value.current = param.page;
+          pagination.value.total = data.content.total;
         }else {
           notification.error({description:data.message})
         }
       })
     };
-    const pagination = reactive({
+    const pagination = ref({
       total:0,
       current:1,
       pageSize:2
@@ -117,7 +133,7 @@ export default defineComponent({
     onMounted(()=>{
       handleQuery({
         page:1,
-        pageSize:pagination.pageSize
+        pageSize:pagination.value.pageSize
       })
     });
 
@@ -130,8 +146,9 @@ export default defineComponent({
       columns,
       passenger,
       open,
-      showModal,
-      handleOk
+      onAdd,
+      handleOk,
+      onEdit
     }
   }
 })
