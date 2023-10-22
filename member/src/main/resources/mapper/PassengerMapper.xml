@@ -14,7 +14,7 @@
     insert into passenger values(#{id},#{memberId},#{name},#{idCard},#{type},#{createTime},#{updateTime})
   </insert>
   <select id="queryList" parameterType="com.study.train.member.req.PassengerQueryReq"  resultType="com.study.train.member.domain.Passenger" useCache="true">
-    select member_id,name,id_card,type,create_time,update_time  from passenger where member_id = #{memberId};
+    select member_id,name,id_card,type,create_time,update_time  from passenger where member_id = #{memberId}
   </select>
 
 </mapper>

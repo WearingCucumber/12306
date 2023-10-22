@@ -2,13 +2,13 @@ package com.study.train.member.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateTime;
+import com.github.pagehelper.PageHelper;
 import com.study.train.common.context.LoginMemberContext;
 import com.study.train.common.util.SnowUtil;
 import com.study.train.member.domain.Passenger;
 import com.study.train.member.mapper.PassengerMapper;
 import com.study.train.member.req.PassengerQueryReq;
 import com.study.train.member.req.PassengerSaveReq;
-import com.study.train.member.resp.PassengerQueryResp;
 import com.study.train.member.service.PassengerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +35,7 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Override
     public List<Passenger> queryList(PassengerQueryReq req) {
+        PageHelper.startPage(1,2);
         List<Passenger> passengers = passengerMapper.queryList(req);
         return passengers;
     }

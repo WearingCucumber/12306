@@ -30,6 +30,7 @@
         <mysql-connector-j.version>8.0.33</mysql-connector-j.version>
         <mybatis-spring-boot-starter.version>3.0.0</mybatis-spring-boot-starter.version>
         <member.version>0.0.1-SNAPSHOT</member.version>
+        <pagehelper-spring-boot-starter.version>1.4.7</pagehelper-spring-boot-starter.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -77,6 +78,12 @@
                 <groupId>com.study</groupId>
                 <artifactId>member</artifactId>
                 <version>${member.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper-spring-boot-starter.version}</version>
             </dependency>
 
         </dependencies>

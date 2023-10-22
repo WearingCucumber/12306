@@ -1,7 +1,6 @@
 package com.study.train.member.controller;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.study.train.common.context.LoginMemberContext;
 import com.study.train.common.resp.CommonResp;
 import com.study.train.member.domain.Passenger;
 import com.study.train.member.req.PassengerQueryReq;
@@ -25,9 +24,9 @@ public class PassengerController {
         return new CommonResp("添加成功");
     }
     @GetMapping("/query-list")
-    public CommonResp<List<PassengerQueryResp>> queryList(){
-        PassengerQueryReq passengerQueryReq = new PassengerQueryReq();
-        passengerQueryReq.setMemberId(LoginMemberContext.getId());
+    public CommonResp<List<PassengerQueryResp>> queryList(PassengerQueryReq passengerQueryReq){
+//        PassengerQueryReq passengerQueryReq = new PassengerQueryReq();
+//        passengerQueryReq.setMemberId(LoginMemberContext.getId());
         List<Passenger> passengers = passengerService.queryList(passengerQueryReq);
         List<PassengerQueryResp> resps = BeanUtil.copyToList(passengers, PassengerQueryResp.class);
         return new CommonResp<>(resps);
