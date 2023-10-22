@@ -77,7 +77,11 @@ export default defineComponent({
       title:"创建时间",
       dataIndex:'createTime',
       key:'createTime'
-    }];
+    }, {
+      title:"更新时间",
+      dataIndex: 'updateTime',
+      key: 'updateTime'
+      }];
     const  handleQuery = (param)=>{
       loading.value=true;
       axios.get("/member/passenger/query-list",{

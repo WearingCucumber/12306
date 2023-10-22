@@ -1,5 +1,8 @@
 package com.study.train.member.req;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.Date;
@@ -12,10 +15,12 @@ public class PassengerSaveReq {
     @NotBlank(message = "身份证不能为空")
     private String idCard;
     @NotBlank(message = "旅客类型不能为空")
+    @Max(value = 3 ,message = "旅客类型参数不合法")
+    @Min(value = 1,message = "旅客类型参数不合法")
     private String type;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
 
     public Long getId() {

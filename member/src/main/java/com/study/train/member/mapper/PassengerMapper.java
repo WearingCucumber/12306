@@ -11,4 +11,5 @@ public interface PassengerMapper {
     void insert(Passenger passenger);
 
     List<Passenger> queryList(PassengerQueryReq passengerQueryReq);
+    void updateById(Passenger passenger);
 }

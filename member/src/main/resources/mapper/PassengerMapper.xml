@@ -18,5 +18,8 @@
     <if test="memberId!=null">where member_id = #{memberId}</if>
     order by create_time desc
   </select>
+  <update id="updateById" parameterType="com.study.train.member.domain.Passenger" flushCache="true">
+    update passenger set name = #{name} , id_card = #{idCard} , type = #{type} ,update_time = #{updateTime} where id = #{id}
+  </update>
 
 </mapper>
